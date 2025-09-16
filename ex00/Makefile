@@ -1,4 +1,4 @@
-NAME        =   Span
+NAME        =   Easy\ find
 SRC_DIR     =   src
 OBJ_DIR     =   obj
 INCLUDE_DIR =   include
