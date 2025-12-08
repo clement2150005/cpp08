@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <stdexcept>
 
 class Span
 {
@@ -11,10 +12,22 @@ public:
 	~Span();
 
 	void addNumber(int number);
-	template <typename InputIt>
-	void addNumbers(InputIt begin, InputIt end);
 	int shortestSpan();
 	int longestSpan();
+
+	template <typename InputIt>
+	void addNumbers(InputIt begin, InputIt end)
+	{
+		size_t rangeSize = std::distance(begin, end);
+		if (v.size() + rangeSize > n)
+			throw std::runtime_error("Adding range would exceed Span capacity");
+
+		while (begin != end)
+		{
+			v.push_back(*begin);
+			++begin;
+		}
+	}
 
 private:
 	unsigned int n;

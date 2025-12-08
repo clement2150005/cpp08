@@ -4,7 +4,7 @@
 
 Span::Span(unsigned int n) : n(n) {}
 
-Span::Span(const Span &other) : v(other.v), n(other.n) {}
+Span::Span(const Span &other) : n(other.n), v(other.v) {}
 
 Span &Span::operator=(const Span &other)
 {
@@ -25,20 +25,6 @@ void Span::addNumber(int number)
 	v.push_back(number);
 }
 
-template <typename InputIt>
-void Span::addNumbers(InputIt begin, InputIt end)
-{
-    size_t rangeSize = std::distance(begin, end);
-    if (v.size() + rangeSize > n)
-        throw std::runtime_error("Adding range would exceed Span capacity");
-
-    while (begin != end)
-    {
-        v.push_back(*begin);
-        ++begin;
-    }
-}
-
 int Span::shortestSpan()
 {
 	unsigned int shortestSpan = 0;
@@ -55,7 +41,7 @@ int Span::shortestSpan()
 				continue;
 		}
 		int diff = v[i + 1] - v[i];
-		if (diff < shortestSpan)
+		if (static_cast<unsigned int>(diff) < shortestSpan)
 			shortestSpan = diff;
 	}
 	return shortestSpan;
