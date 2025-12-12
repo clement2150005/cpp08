@@ -6,7 +6,10 @@ int main()
 {
     try
     {
-        std::cout << "=== Single add test ===" << std::endl;
+        // ============================
+        // Test 1
+        // ============================
+        std::cout << "=== Test 1 ===\n";
         Span sp(5);
         sp.addNumber(6);
         sp.addNumber(3);
@@ -14,43 +17,67 @@ int main()
         sp.addNumber(9);
         sp.addNumber(11);
 
-        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
-        std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+        std::cout << "Stored numbers: 6, 3, 17, 9, 11\n";
+        std::cout << "Expected shortest: 2\n";
+        std::cout << "Actual shortest:   " << sp.shortestSpan() << "\n";
+        std::cout << "Expected longest: 14\n";
+        std::cout << "Actual longest:    " << sp.longestSpan() << "\n\n";
 
-        std::cout << "\n=== Iterator range test ===" << std::endl;
-        std::vector<int> numbers;
+        // ============================
+        // Test 2
+        // ============================
+        std::cout << "=== Test 2 ===\n";
+        std::vector<int> nums;
         for (int i = 0; i < 5; ++i)
-            numbers.push_back(i * 10);
+            nums.push_back(i * 10);  // 0, 10, 20, 30, 40
 
         Span sp2(10);
-        sp2.addNumbers(numbers.begin(), numbers.end());
+        sp2.addNumbers(nums.begin(), nums.end());
         sp2.addNumber(42);
 
-        std::cout << "Shortest span: " << sp2.shortestSpan() << std::endl;
-        std::cout << "Longest span: " << sp2.longestSpan() << std::endl;
+        std::cout << "Stored numbers: 0, 10, 20, 30, 40, 42\n";
+        std::cout << "Expected shortest: 2\n";
+        std::cout << "Actual shortest:   " << sp2.shortestSpan() << "\n";
+        std::cout << "Expected longest: 42\n";
+        std::cout << "Actual longest:    " << sp2.longestSpan() << "\n\n";
 
-        std::cout << "\n=== Large test (10000 numbers) ===" << std::endl;
+        // ============================
+        // Test 3
+        // ============================
+        std::cout << "=== Test 3 ===\n";
         Span sp3(10000);
         for (int i = 0; i < 10000; ++i)
             sp3.addNumber(i);
 
-        std::cout << "Shortest span: " << sp3.shortestSpan() << std::endl;
-        std::cout << "Longest span: " << sp3.longestSpan() << std::endl;
+        std::cout << "Stored numbers: 0 to 9999\n";
+        std::cout << "Expected shortest: 1\n";
+        std::cout << "Actual shortest:   " << sp3.shortestSpan() << "\n";
+        std::cout << "Expected longest: 9999\n";
+        std::cout << "Actual longest:    " << sp3.longestSpan() << "\n\n";
 
-        std::cout << "\n=== Exception tests ===" << std::endl;
+        // ============================
+        // Test 4
+        // ============================
+        std::cout << "=== Test 4 ===\n";
         Span sp4(2);
         sp4.addNumber(1);
-        try { sp4.shortestSpan(); }
-        catch (const std::exception &e) { std::cout << "Expected exception: " << e.what() << std::endl; }
-        sp4.addNumber(2);
-        try { sp4.addNumber(3); }
-        catch (const std::exception &e) { std::cout << "Expected exception: " << e.what() << std::endl; }
 
+        std::cout << "Expected exception (shortestSpan with 1 number): No span can be found\n";
+        std::cout << "Actual: ";
+        try { sp4.shortestSpan(); }
+        catch (const std::exception &e) { std::cout << e.what(); }
+        std::cout << "\n\n";
+
+        sp4.addNumber(2);
+        std::cout << "Expected exception (addNumber past capacity): Span is full\n";
+        std::cout << "Actual: ";
+        try { sp4.addNumber(3); }
+        catch (const std::exception &e) { std::cout << e.what(); }
+        std::cout << "\n";
     }
     catch (const std::exception &e)
     {
-        std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        std::cerr << "Unexpected exception: " << e.what() << "\n";
     }
-
     return 0;
 }
